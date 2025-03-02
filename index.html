@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>برنامج حساب المرتبات</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .container {
+            max-width: 500px;
+            margin-top: 50px;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2 class="text-center mb-4">حساب المرتب</h2>
+        <div class="mb-3">
+            <label class="form-label">الراتب الشهري:</label>
+            <input type="number" id="monthSalary" class="form-control" required placeholder="أدخل الراتب الشهري">
+        </div>
+        <div class="mb-3">
+            <label class="form-label">عدد أيام العمل:</label>
+            <input type="number" id="workDays" class="form-control" required placeholder="أدخل عدد الأيام">
+        </div>
+        <div class="mb-3">
+            <label class="form-label">الخصومات:</label>
+            <input type="number" id="deductions" class="form-control" placeholder="أدخل الخصومات إن وجدت" value="0">
+        </div>
+        <div class="mb-3">
+            <label class="form-label">المكافآت:</label>
+            <input type="number" id="bonuses" class="form-control" placeholder="أدخل المكافآت إن وجدت" value="0">
+        </div>
+        <div class="mb-3">
+            <label class="form-label">أوفر تايم (بالساعات):</label>
+            <input type="number" id="overtimeHours" class="form-control" placeholder="أدخل عدد الساعات" value="0">
+        </div>
+        <button class="btn btn-primary w-100" onclick="calculateSalary()">حساب المرتب</button>
+        <h3 class="text-center mt-4" id="result"></h3>
+    </div>
+
+    <script>
+        function calculateSalary() {
+            let monthSalary = parseFloat(document.getElementById("monthSalary").value) || 0;
+            let workDays = parseInt(document.getElementById("workDays").value) || 0;
+            let deductions = parseFloat(document.getElementById("deductions").value) || 0;
+            let bonuses = parseFloat(document.getElementById("bonuses").value) || 0;
+            let overtimeHours = parseFloat(document.getElementById("overtimeHours").value) || 0;
+
+            let dailySalary = monthSalary / 30;
+            let baseSalary = dailySalary * workDays;
+            let overtimePay = (dailySalary / 8) * 1.5 * overtimeHours;
+            let finalSalary = baseSalary + overtimePay + bonuses - deductions;
+
+            document.getElementById("result").innerHTML = `الراتب النهائي: ${finalSalary.toFixed(2)} جنيه`;
+
+            // تفريغ الحقول بعد الحساب
+            document.getElementById("monthSalary").value = "";
+            document.getElementById("workDays").value = "";
+            document.getElementById("deductions").value = "0";
+            document.getElementById("bonuses").value = "0";
+            document.getElementById("overtimeHours").value = "0";
+        }
+
+       
+    </script>
+</body>
+</html>
